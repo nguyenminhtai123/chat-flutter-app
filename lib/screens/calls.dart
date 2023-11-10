@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CallsScreen extends StatefulWidget {
   const CallsScreen({super.key});
@@ -10,6 +10,6 @@ class CallsScreen extends StatefulWidget {
 class _CallsScreenState extends State<CallsScreen> {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(child: Text("Calls Screen"));
+    return Scaffold(body: Text("Calls Screen"));
   }
 }
