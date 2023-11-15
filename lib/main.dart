@@ -1,9 +1,9 @@
 // ignore_for_file: overridden_fields, annotate_overrides, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
-import 'package:chat_app/bloc/auth_bloc.dart';
 import 'package:chat_app/firebase_options.dart';
-import 'package:chat_app/routes.dart';
-import 'package:chat_app/screens/home_page.dart';
-import 'package:chat_app/screens/login.dart';
+import 'package:chat_app/screens/auth.dart';
+import 'package:chat_app/screens/chat.dart';
+import 'package:chat_app/screens/splash.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,44 +13,29 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp(
-    AuthBloc(),
+  runApp(
     MaterialApp(
       title: 'Chat App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: const Color(0xFF08C187),
+      theme: ThemeData().copyWith(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 63, 17, 177),
+        ),
       ),
-      routes: routes,
-      home: const LoginScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SplashScreen();
+          }
+          if (snapshot.hasData) {
+            return const ChatScreen();
+          }
+
+          return const AuthScreen();
+        },
+      ),
     ),
-  ));
-}
-
-class MyApp extends InheritedWidget {
-  final AuthBloc bloc;
-  final Widget child;
-  MyApp(this.bloc, this.child) : super(child: child);
-
-  // This widget is the root of your application.
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) {
-    return false;
-  }
-
-  static MyApp? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<MyApp>();
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(),
-    );
-  }
+  );
 }
