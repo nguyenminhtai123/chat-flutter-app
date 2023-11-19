@@ -5,6 +5,7 @@ import 'package:chat_app/firebase_options.dart';
 import 'package:chat_app/router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,17 +13,19 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    MaterialApp(
-      title: 'Chat App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: ColorPalette.backgroundColor,
-        appBarTheme: const AppBarTheme(
-          color: ColorPalette.appBarColor,
+    ProviderScope(
+      child: MaterialApp(
+        title: 'Chat App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: ColorPalette.backgroundColor,
+          appBarTheme: const AppBarTheme(
+            color: ColorPalette.appBarColor,
+          ),
         ),
+        onGenerateRoute: (settings) => generateRoute(settings),
+        home: const LandingScreen(),
       ),
-      onGenerateRoute: (settings) => generateRoute(settings),
-      home: const LandingScreen(),
     ),
   );
 }
