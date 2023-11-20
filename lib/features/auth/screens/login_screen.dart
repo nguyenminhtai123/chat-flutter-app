@@ -1,6 +1,9 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:chat_app/common/widgets/custom_button.dart';
 import 'package:chat_app/core/constant/color.dart';
 import 'package:chat_app/features/auth/controller/auth_controller.dart';
+import 'package:chat_app/utils/utils.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,9 +31,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     showCountryPicker(
       context: context,
       onSelect: (Country _country) {
-        setState(() {
-          country = _country;
-        });
+        setState(
+          () {
+            country = _country;
+          },
+        );
       },
     );
   }
@@ -42,6 +47,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             context,
             '+${country!.phoneCode}$phoneNumber',
           );
+    } else {
+      showSnackBar(context: context, content: 'Fill out all the fields');
     }
   }
 
@@ -81,7 +88,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 if (country != null)
                   Text(
                     '+${country!.phoneCode}',
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 const SizedBox(
                   width: 10,

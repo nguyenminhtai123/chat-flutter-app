@@ -32,34 +32,37 @@ class OTPScreen extends ConsumerWidget {
           elevation: 0,
           backgroundColor: ColorPalette.backgroundColor,
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            const Text("We have sent an SMS with a code."),
-            SizedBox(
-              width: size.width * 0.5,
-              child: TextField(
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  hintText: "- - - - - -",
-                  hintStyle: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-                keyboardType: TextInputType.number,
-                onChanged: (val) {
-                  if (val.length == 6) {
-                    print("Verifying phone number");
-                    verifyOTP(ref, context, val.trim());
-                  }
-                  print('this func was run');
-                },
+        body: SizedBox(
+          width: double.maxFinite,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 20,
               ),
-            )
-          ],
+              const Text("We have sent an SMS with a code."),
+              Container(
+                width: size.width / 2,
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    hintText: "- - - - - -",
+                    hintStyle: TextStyle(
+                      fontSize: 30,
+                    ),
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (val) {
+                    if (val.length == 6) {
+                      print("Verifying phone number");
+                      verifyOTP(ref, context, val.trim());
+                    }
+                    print('this func was run');
+                  },
+                ),
+              )
+            ],
+          ),
         ));
   }
 }

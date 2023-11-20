@@ -46,6 +46,7 @@ dependencies:
   uuid: ^4.2.1
   country_picker: ^2.0.22
   flutter_riverpod: ^2.4.6
+  file_picker: ^6.1.1
 
 dev_dependencies:
   flutter_test:
